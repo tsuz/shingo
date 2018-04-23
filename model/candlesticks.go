@@ -1,15 +1,21 @@
 package model
 
-import "fmt"
+import (
+	"fmt"
+)
 
-type CandlesticksMeta interface {
+type CandlestickMeta interface {
 	Total() int
 	Interval() Interval
 	ItemAtIndex(idx int) *Candlestick
 }
+type CandlestickIndicators interface {
+	AppendSMA(arg IndicatorInputArg) error
+}
 
 type Candlesticks struct {
-	CandlesticksMeta
+	CandlestickMeta
+	CandlestickIndicators
 
 	interval Interval
 	items    []*Candlestick
