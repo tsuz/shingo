@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 type CandlesticksMeta interface {
 	Total() int
 	Interval() Interval
@@ -41,4 +43,14 @@ func (cs *Candlesticks) ItemAtIndex(idx int) *Candlestick {
 // Interval returns currently set interval for the series of candlesticks
 func (cs *Candlesticks) Interval() Interval {
 	return cs.interval
+}
+
+// GenerateIndicator generates requested signals on that series of candlesticks
+func (cs *Candlesticks) GenerateIndicator(i IndicatorType, arg IndicatorInputArg) error {
+	switch i {
+	case IndicatorTypeSMA:
+		return cs.AppendSMA(arg)
+
+	}
+	return fmt.Errorf("Error unsupported indicator type %+v", i)
 }
