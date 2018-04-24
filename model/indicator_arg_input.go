@@ -7,4 +7,9 @@ type IndicatorInputArg struct {
 	MacdLarge  int
 	MacdSmall  int
 	MacdSignal int
+
+	IchimokuCloudTenkan  int
+	IchimokuCloudKijun   int
+	IchimokuCloudSenkouB int
+	IchimokuCloudChikou  int
 }
