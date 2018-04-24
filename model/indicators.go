@@ -2,8 +2,9 @@ package model
 
 // Indicators provides indicator type for each candlestick
 type Indicators struct {
-	SMAs map[int]*SMADelta
-	EMAs map[int]*EMADelta
+	SMAs  map[int]*SMADelta
+	EMAs  map[int]*EMADelta
+	MACDs map[int]map[int]map[int]*MACDDelta
 }
 
 // SMADelta is the value for this period and change since last period
@@ -16,4 +17,11 @@ type SMADelta struct {
 type EMADelta struct {
 	Value  float64
 	Change float64
+}
+
+// MACDDelta provides macd, signal and histogram for this candlestick
+type MACDDelta struct {
+	MACDValue     float64
+	SignalValue   float64
+	MACDHistogram float64
 }

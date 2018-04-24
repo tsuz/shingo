@@ -12,6 +12,7 @@ type CandlestickMeta interface {
 type CandlestickIndicators interface {
 	AppendEMA(arg IndicatorInputArg) error
 	AppendSMA(arg IndicatorInputArg) error
+	AppendMACD(arg IndicatorInputArg) error
 }
 
 type Candlesticks struct {
@@ -59,6 +60,8 @@ func (cs *Candlesticks) GenerateIndicator(i IndicatorType, arg IndicatorInputArg
 		return cs.AppendSMA(arg)
 	case IndicatorTypeEMA:
 		return cs.AppendEMA(arg)
+	case IndicatorTypeMACD:
+		return cs.AppendMACD(arg)
 	}
 	return fmt.Errorf("Error unsupported indicator type %+v", i)
 }
