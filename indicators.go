@@ -1,4 +1,4 @@
-package model
+package shingo
 
 // Indicators provides indicator type for each candlestick
 type Indicators struct {
