@@ -1,4 +1,4 @@
-package model
+package shingo
 
 import (
 	"fmt"
