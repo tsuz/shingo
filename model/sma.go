@@ -10,9 +10,6 @@ func (cs *Candlesticks) AppendSMA(arg IndicatorInputArg) error {
 	if period < 1 {
 		return errors.Wrap(nil, "Period must be positive")
 	}
-	// if limit < 1 {
-	// 	return errors.Wrap(nil, "Limit must be positive")
-	// }
 	list := cs
 	l := cs.Total()
 	if l < 1 {

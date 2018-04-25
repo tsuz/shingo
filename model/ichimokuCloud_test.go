@@ -10,9 +10,6 @@ func TestIchimokuCloud(t *testing.T) {
 		arg      IndicatorInputArg
 		candles  []*Candlestick
 		expected []*IchimokuCloudDelta
-		// tenkan   int
-		// kijun    int
-		// limit    int
 	}{
 		{
 			arg: IndicatorInputArg{
@@ -23,9 +20,6 @@ func TestIchimokuCloud(t *testing.T) {
 			// doing this in hypothesis will look like this
 			// it will just allocate all kijun
 			// and see if it has any effect
-			// tenkan: 9,
-			// kijun:  26,
-			// limit:  30,
 			candles: []*Candlestick{
 				&Candlestick{High: 100, Low: 96.19478155},
 				&Candlestick{High: 98.81323044, Low: 97.19536099},
@@ -93,9 +87,6 @@ func TestIchimokuCloud(t *testing.T) {
 				IchimokuCloudTenkan: 9,
 				Limit:               1,
 			},
-			// tenkan: 9,
-			// kijun:  26,
-			// limit:  1,
 			candles: []*Candlestick{
 				&Candlestick{High: 100, Low: 96.19478155},
 				&Candlestick{High: 98.81323044, Low: 97.19536099},
@@ -146,9 +137,6 @@ func TestIchimokuCloud(t *testing.T) {
 				IchimokuCloudTenkan: 9,
 				Limit:               1,
 			},
-			// tenkan: 9,
-			// kijun:  26,
-			// limit:  1,
 			candles: []*Candlestick{
 				&Candlestick{High: 100, Low: 96.19478155},
 				&Candlestick{High: 200, Low: 9.19478155},
