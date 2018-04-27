@@ -219,7 +219,7 @@ func TestAppendMACD(t *testing.T) {
 	}
 
 	for _, v := range macdTests {
-		cs, _ := NewCandlesticks(IntervalOneDay)
+		cs, _ := NewCandlesticks(IntervalOneDay, 100)
 		for _, c := range v.candles {
 			cs.AppendCandlestick(c)
 		}
