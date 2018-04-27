@@ -20,19 +20,24 @@ type Candlesticks struct {
 	CandlestickMeta
 	CandlestickIndicators
 
-	interval Interval
-	items    []*Candlestick
+	interval   Interval
+	items      []*Candlestick
+	maxCandles int
 }
 
 func (cs *Candlesticks) AppendCandlestick(c *Candlestick) error {
 	cs.items = append(cs.items, c)
+	if len(cs.items) > cs.maxCandles {
+		cs.items = cs.items[1:]
+	}
 	return nil
 }
 
-func NewCandlesticks(i Interval) (*Candlesticks, error) {
+func NewCandlesticks(i Interval, maxCandles int) (*Candlesticks, error) {
 	return &Candlesticks{
-		interval: i,
-		items:    make([]*Candlestick, 0),
+		maxCandles: maxCandles,
+		interval:   i,
+		items:      make([]*Candlestick, 0),
 	}, nil
 }
 

@@ -49,7 +49,7 @@ func (cs *Candlesticks) AppendMACD(args IndicatorInputArg) error {
 		return errors.Wrap(err, "Error generating period2 indicator")
 	}
 
-	cst, err := NewCandlesticks(IntervalOneDay)
+	cst, err := NewCandlesticks(IntervalOneDay, 100)
 	if err != nil {
 		return errors.Wrap(err, "Error creating candlesticks for macd signal line")
 	}

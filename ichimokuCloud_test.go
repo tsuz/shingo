@@ -187,7 +187,7 @@ func TestIchimokuCloud(t *testing.T) {
 
 	for ti, v := range testCases {
 
-		cs, _ := NewCandlesticks(IntervalOneDay)
+		cs, _ := NewCandlesticks(IntervalOneDay, 100)
 		for _, c := range v.candles {
 			cs.AppendCandlestick(c)
 		}
