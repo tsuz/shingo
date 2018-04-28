@@ -73,3 +73,12 @@ func (cs *Candlesticks) GenerateIndicator(i IndicatorType, arg IndicatorInputArg
 	}
 	return fmt.Errorf("Error unsupported indicator type %+v", i)
 }
+
+// GetLastItem returns the candlestick that was most recently added
+func (cs *Candlesticks) GetLastItem() *Candlestick {
+	t := cs.Total()
+	if t == 0 {
+		return nil
+	}
+	return cs.items[t-1]
+}

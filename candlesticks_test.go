@@ -76,3 +76,39 @@ func TestCandlesticksMaxCap(t *testing.T) {
 		}
 	}
 }
+
+func TestCandlesticksGetLast(t *testing.T) {
+	c1, _ := NewCandlestick(45.5, 46, 46.5, 42.2, time.Now(), 2302)
+	c2, _ := NewCandlestick(47, 46, 46.5, 42.2, time.Now().Add(time.Minute*1), 3000)
+	max := 3
+	testCases := []struct {
+		candles  []*Candlestick
+		expected *Candlestick
+	}{
+		{
+			candles:  []*Candlestick{},
+			expected: nil,
+		},
+		{
+			candles:  []*Candlestick{c1},
+			expected: c1,
+		},
+		{
+			candles:  []*Candlestick{c1, c2},
+			expected: c2,
+		},
+	}
+	for _, tc := range testCases {
+		cs, err := NewCandlesticks(IntervalOneDay, max)
+		if err != nil {
+			t.Fatalf("Error creating new candlesticks %+v", err)
+		}
+		for _, c := range tc.candles {
+			cs.AppendCandlestick(c)
+		}
+		c := cs.GetLastItem()
+		if c != tc.expected {
+			t.Errorf("Expected %+v but got %+v", tc.expected, c)
+		}
+	}
+}
