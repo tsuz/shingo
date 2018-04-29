@@ -26,7 +26,6 @@ func (cs *Candlesticks) AppendIchimokuCloud(arg IndicatorInputArg) (err error) {
 
 	for i := startCalcIdx; i < cl; i++ {
 		v := cs.ItemAtIndex(i)
-		// v := (*cs)[i]
 		if v.High > tenkanHVal {
 			tenkanHVal = v.High
 			tenkanHIdx = i
