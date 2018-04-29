@@ -48,6 +48,9 @@ func (cs *Candlesticks) Total() int {
 
 // ItemAtIndex returns the item at specific index
 func (cs *Candlesticks) ItemAtIndex(idx int) *Candlestick {
+	if idx < 0 {
+		return nil
+	}
 	if len(cs.items) > idx {
 		return cs.items[idx]
 	}
@@ -70,6 +73,8 @@ func (cs *Candlesticks) GenerateIndicator(i IndicatorType, arg IndicatorInputArg
 		return cs.AppendMACD(arg)
 	case IndicatorTypeIchimokuCloud:
 		return cs.AppendIchimokuCloud(arg)
+	case IndicatorTypeATR:
+		return cs.AppendATR(arg)
 	}
 	return fmt.Errorf("Error unsupported indicator type %+v", i)
 }

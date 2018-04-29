@@ -7,4 +7,5 @@ const (
 	IndicatorTypeEMA                         = "IndicatorTypeEMA"
 	IndicatorTypeMACD                        = "IndicatorTypeMACD"
 	IndicatorTypeIchimokuCloud               = "IndicatorTypeIchimokuCloud"
+	IndicatorTypeATR                         = "IndicatorTypeATR"
 )

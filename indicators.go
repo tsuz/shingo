@@ -6,6 +6,7 @@ type Indicators struct {
 	EMAs           map[int]*EMADelta
 	MACDs          map[int]map[int]map[int]*MACDDelta
 	IchimokuClouds map[string]*IchimokuCloudDelta
+	ATRs           map[int]*ATRDelta
 }
 
 // SMADelta is the value for this period and change since last period
@@ -34,4 +35,10 @@ type IchimokuCloudDelta struct {
 	SenkouA float64
 	SenkouB float64
 	Chikou  float64
+}
+
+// ATRDelta provides average true range for this candlestick
+type ATRDelta struct {
+	Value  float64
+	Change float64
 }
