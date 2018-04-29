@@ -181,7 +181,7 @@ func TestAppendEMA(t *testing.T) {
 				continue
 			}
 			period := v.args.Period
-			if !almostEqual(c.Indicators.EMAs[period].Value, v.expected[i].Value) {
+			if !almostEqual(c.Indicators.EMAs[period].Value, v.expected[i].Value, 0.0001) {
 				t.Errorf("Expected value %+v but got %+v for test  %+v index %+v for %s",
 					v.expected[i].Value,
 					c.Indicators.EMAs[period].Value,
@@ -189,7 +189,7 @@ func TestAppendEMA(t *testing.T) {
 					i,
 					v.title)
 			}
-			if !almostEqual(c.Indicators.EMAs[period].Change, v.expected[i].Change) {
+			if !almostEqual(c.Indicators.EMAs[period].Change, v.expected[i].Change, 0.0001) {
 				t.Errorf("Expected change %+v but got %+v for test  %+v index %+v for %s",
 					v.expected[i].Change,
 					c.Indicators.EMAs[period].Change,

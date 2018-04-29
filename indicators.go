@@ -7,6 +7,7 @@ type Indicators struct {
 	MACDs          map[int]map[int]map[int]*MACDDelta
 	IchimokuClouds map[string]*IchimokuCloudDelta
 	ATRs           map[int]*ATRDelta
+	SuperTrends    map[int]map[float64]*SuperTrendDelta
 }
 
 // SMADelta is the value for this period and change since last period
@@ -42,3 +43,20 @@ type ATRDelta struct {
 	Value  float64
 	Change float64
 }
+
+type SuperTrendDelta struct {
+	Longband  float64
+	Shortband float64
+	Trend     Trend
+}
+
+type Trend int
+
+const (
+	// Undeterminable trend
+	Undeterminable Trend = 0
+	// Bear market
+	Bear Trend = 1
+	// Bull market
+	Bull Trend = 2
+)

@@ -98,14 +98,14 @@ func TestAppendATR(t *testing.T) {
 				continue
 			}
 			atrs := c.Indicators.ATRs[14]
-			if !almostEqual(atrs.Value, v.expected[i].Value) {
+			if !almostEqual(atrs.Value, v.expected[i].Value, 0.01) {
 				t.Errorf("Expected ATR value to be %+v but got %+v for test: %s, index: %d",
 					v.expected[i].Value,
 					atrs.Value,
 					v.title,
 					i)
 			}
-			if !almostEqual(atrs.Change, v.expected[i].Change) {
+			if !almostEqual(atrs.Change, v.expected[i].Change, 0.01) {
 				t.Errorf("Expected ATR change to be %+v but got %+v for test: %s, index: %d",
 					v.expected[i].Change,
 					atrs.Change,

@@ -4,8 +4,9 @@ type IndicatorType string
 
 const (
 	IndicatorTypeSMA           IndicatorType = "IndicatorTypeSMA"
-	IndicatorTypeEMA                         = "IndicatorTypeEMA"
-	IndicatorTypeMACD                        = "IndicatorTypeMACD"
-	IndicatorTypeIchimokuCloud               = "IndicatorTypeIchimokuCloud"
-	IndicatorTypeATR                         = "IndicatorTypeATR"
+	IndicatorTypeEMA           IndicatorType = "IndicatorTypeEMA"
+	IndicatorTypeMACD          IndicatorType = "IndicatorTypeMACD"
+	IndicatorTypeIchimokuCloud IndicatorType = "IndicatorTypeIchimokuCloud"
+	IndicatorTypeATR           IndicatorType = "IndicatorTypeATR"
+	IndicatorTypeSuperTrend    IndicatorType = "IndicatorTypeSuperTrend"
 )

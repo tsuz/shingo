@@ -75,6 +75,8 @@ func (cs *Candlesticks) GenerateIndicator(i IndicatorType, arg IndicatorInputArg
 		return cs.AppendIchimokuCloud(arg)
 	case IndicatorTypeATR:
 		return cs.AppendATR(arg)
+	case IndicatorTypeSuperTrend:
+		return cs.AppendSuperTrend(arg)
 	}
 	return fmt.Errorf("Error unsupported indicator type %+v", i)
 }

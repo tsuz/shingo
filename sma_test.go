@@ -174,7 +174,7 @@ func TestAppendSMA(t *testing.T) {
 			} else if v.expected[i] != nil && c.Indicators == nil {
 				t.Fatalf("Expected indicators to be non nil but got nil for %s", v.title)
 			}
-			if !almostEqual(c.Indicators.SMAs[period].Value, v.expected[i].Value) {
+			if !almostEqual(c.Indicators.SMAs[period].Value, v.expected[i].Value, 0.0001) {
 				t.Errorf("Expected value %+v but got %+v for test  %+v index %+v for %s",
 					c.Indicators.SMAs[period].Value,
 					v.expected[i].Value,
@@ -182,7 +182,7 @@ func TestAppendSMA(t *testing.T) {
 					i,
 					v.title)
 			}
-			if !almostEqual(c.Indicators.SMAs[period].Change, v.expected[i].Change) {
+			if !almostEqual(c.Indicators.SMAs[period].Change, v.expected[i].Change, 0.0001) {
 				t.Errorf("Expected change %+v but got %+v for test  %+v index %+v for %s",
 					c.Indicators.SMAs[period].Change,
 					v.expected[i].Change,
@@ -194,7 +194,7 @@ func TestAppendSMA(t *testing.T) {
 	}
 }
 
-func almostEqual(x, y float64) bool {
+func almostEqual(x, y, epsilon float64) bool {
 	return math.Nextafter(x, y) == y ||
-		math.Abs(x-y) < 0.01 // epislon hack
+		math.Abs(x-y) < epsilon // epislon hack
 }

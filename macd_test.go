@@ -249,21 +249,21 @@ func TestAppendMACD(t *testing.T) {
 				continue
 			}
 			mcds := c.Indicators.MACDs[12][26][9]
-			if !almostEqual(mcds.MACDValue, v.expected[i].MACDValue) {
+			if !almostEqual(mcds.MACDValue, v.expected[i].MACDValue, 0.001) {
 				t.Errorf("Expected MACDValue %+v but got %+v for test %s index %d",
 					v.expected[i].MACDValue,
 					mcds.MACDValue,
 					v.title,
 					i)
 			}
-			if !almostEqual(mcds.MACDHistogram, v.expected[i].MACDHistogram) {
+			if !almostEqual(mcds.MACDHistogram, v.expected[i].MACDHistogram, 0.001) {
 				t.Errorf("Expected MACDHistogram %+v but got %+v for test %s index %d",
 					v.expected[i].MACDHistogram,
 					mcds.MACDHistogram,
 					v.title,
 					i)
 			}
-			if !almostEqual(mcds.SignalValue, v.expected[i].SignalValue) {
+			if !almostEqual(mcds.SignalValue, v.expected[i].SignalValue, 0.001) {
 				t.Errorf("Expected SignalValue %+v but got %+v for test %s index %d",
 					v.expected[i].SignalValue,
 					mcds.SignalValue,
