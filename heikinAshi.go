@@ -20,14 +20,16 @@ func (cs *Candlesticks) AppendHeikinAshi(arg IndicatorInputArg) error {
 
 		close := (v.Open + v.High + v.Low + v.Close) / 4
 		prev := getHeikinAshiDelta(p)
-		var open float64
+		var open, high, low float64
 		if prev == nil {
 			open = v.Open
+			low = v.Low
+			high = v.High
 		} else {
 			open = (prev.Open + prev.Close) / 2
+			high = findHighestValue(v.High, open, close)
+			low = findLowestValue(v.Low, open, close)
 		}
-		high := findHighestValue(v.High, open, close)
-		low := findLowestValue(v.Low, open, close)
 
 		setHeikinAshiDelta(v, open, close, high, low)
 	}
