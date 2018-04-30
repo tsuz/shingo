@@ -67,6 +67,19 @@ func findHighestValue(vals ...float64) float64 {
 	return f
 }
 
+func findLowestValue(vals ...float64) float64 {
+	if len(vals) < 1 {
+		return 0
+	}
+	f := vals[0]
+	for _, v := range vals {
+		if v < f {
+			f = v
+		}
+	}
+	return f
+}
+
 func setATRIndicator(v *Candlestick, period int, val float64, chg float64) {
 	if v.Indicators == nil {
 		v.Indicators = &Indicators{}
