@@ -9,4 +9,5 @@ const (
 	IndicatorTypeIchimokuCloud IndicatorType = "IndicatorTypeIchimokuCloud"
 	IndicatorTypeATR           IndicatorType = "IndicatorTypeATR"
 	IndicatorTypeSuperTrend    IndicatorType = "IndicatorTypeSuperTrend"
+	IndicatorTypeHeikinAshi    IndicatorType = "IndicatorTypeHeikinAshi"
 )

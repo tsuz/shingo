@@ -77,6 +77,8 @@ func (cs *Candlesticks) GenerateIndicator(i IndicatorType, arg IndicatorInputArg
 		return cs.AppendATR(arg)
 	case IndicatorTypeSuperTrend:
 		return cs.AppendSuperTrend(arg)
+	case IndicatorTypeHeikinAshi:
+		return cs.AppendHeikinAshi(arg)
 	}
 	return fmt.Errorf("Error unsupported indicator type %+v", i)
 }

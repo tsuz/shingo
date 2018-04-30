@@ -8,6 +8,7 @@ type Indicators struct {
 	IchimokuClouds map[string]*IchimokuCloudDelta
 	ATRs           map[int]*ATRDelta
 	SuperTrends    map[int]map[float64]*SuperTrendDelta
+	HeikinAshi     *HeikinAshiDelta
 }
 
 // SMADelta is the value for this period and change since last period
@@ -48,6 +49,13 @@ type SuperTrendDelta struct {
 	Longband  float64
 	Shortband float64
 	Trend     Trend
+}
+
+type HeikinAshiDelta struct {
+	Open  float64
+	High  float64
+	Low   float64
+	Close float64
 }
 
 type Trend int
