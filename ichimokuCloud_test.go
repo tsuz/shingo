@@ -204,7 +204,7 @@ func TestIchimokuCloud(t *testing.T) {
 				continue
 			}
 			key := fmt.Sprintf("%d,%d", v.arg.IchimokuCloudTenkan, v.arg.IchimokuCloudKijun)
-			if !almostEqual(c.Indicators.IchimokuClouds[key].Tenkan, v.expected[i].Tenkan) {
+			if !almostEqual(c.Indicators.IchimokuClouds[key].Tenkan, v.expected[i].Tenkan, 0.0001) {
 				t.Errorf("Expected tenkan %+v but got %+v for test  %+v index %+v",
 					v.expected[i].Tenkan,
 					c.Indicators.IchimokuClouds[key].Tenkan,
@@ -214,7 +214,7 @@ func TestIchimokuCloud(t *testing.T) {
 			if v.expected[i].Kijun == 0 {
 				continue
 			}
-			if !almostEqual(c.Indicators.IchimokuClouds[key].Kijun, v.expected[i].Kijun) {
+			if !almostEqual(c.Indicators.IchimokuClouds[key].Kijun, v.expected[i].Kijun, 0.0001) {
 				t.Errorf("Expected kijun %+v but got %+v for test  %+v index %+v",
 					v.expected[i].Kijun,
 					c.Indicators.IchimokuClouds[key].Kijun,
@@ -222,7 +222,7 @@ func TestIchimokuCloud(t *testing.T) {
 					i)
 			}
 
-			if !almostEqual(c.Indicators.IchimokuClouds[key].SenkouA, v.expected[i].SenkouA) {
+			if !almostEqual(c.Indicators.IchimokuClouds[key].SenkouA, v.expected[i].SenkouA, 0.0001) {
 				t.Errorf("Expected senkou span A of %+v but got %+v for test  %+v index %+v",
 					v.expected[i].SenkouA,
 					c.Indicators.IchimokuClouds[key].SenkouA,
@@ -230,7 +230,7 @@ func TestIchimokuCloud(t *testing.T) {
 					i)
 			}
 
-			if !almostEqual(c.Indicators.IchimokuClouds[key].SenkouB, v.expected[i].SenkouB) {
+			if !almostEqual(c.Indicators.IchimokuClouds[key].SenkouB, v.expected[i].SenkouB, 0.0001) {
 				t.Errorf("Expected senkou span B of %+v but got %+v for test  %+v index %+v",
 					v.expected[i].SenkouB,
 					c.Indicators.IchimokuClouds[key].SenkouB,

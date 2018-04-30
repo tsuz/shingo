@@ -6,6 +6,9 @@ type Indicators struct {
 	EMAs           map[int]*EMADelta
 	MACDs          map[int]map[int]map[int]*MACDDelta
 	IchimokuClouds map[string]*IchimokuCloudDelta
+	ATRs           map[int]*ATRDelta
+	SuperTrends    map[int]map[float64]*SuperTrendDelta
+	HeikinAshi     *HeikinAshiDelta
 }
 
 // SMADelta is the value for this period and change since last period
@@ -35,3 +38,33 @@ type IchimokuCloudDelta struct {
 	SenkouB float64
 	Chikou  float64
 }
+
+// ATRDelta provides average true range for this candlestick
+type ATRDelta struct {
+	Value  float64
+	Change float64
+}
+
+type SuperTrendDelta struct {
+	Longband  float64
+	Shortband float64
+	Trend     Trend
+}
+
+type HeikinAshiDelta struct {
+	Open  float64
+	High  float64
+	Low   float64
+	Close float64
+}
+
+type Trend int
+
+const (
+	// Undeterminable trend
+	Undeterminable Trend = 0
+	// Bear market
+	Bear Trend = 1
+	// Bull market
+	Bull Trend = 2
+)
