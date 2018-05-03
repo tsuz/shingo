@@ -11,6 +11,10 @@ func (cs *Candlesticks) AppendSuperTrend(arg IndicatorInputArg) error {
 	limit := arg.Limit
 	period := arg.Period
 	multi := arg.Multiplier
+
+	cs.mux.Lock()
+	defer cs.mux.Unlock()
+
 	total := cs.Total()
 	if period < 1 {
 		return errors.New("expected period to be positive")

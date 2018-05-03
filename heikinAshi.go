@@ -3,6 +3,8 @@ package shingo
 // AppendHeikinAshi appends heikin ashi values for each candlestick
 func (cs *Candlesticks) AppendHeikinAshi(arg IndicatorInputArg) error {
 	limit := arg.Limit
+	cs.mux.Lock()
+	defer cs.mux.Unlock()
 	total := cs.Total()
 	if total < 1 {
 		return nil
@@ -55,5 +57,10 @@ func setHeikinAshiDelta(c *Candlestick, open, close, high, low float64) {
 			High:  high,
 			Low:   low,
 		}
+	} else {
+		c.Indicators.HeikinAshi.Open = open
+		c.Indicators.HeikinAshi.Close = close
+		c.Indicators.HeikinAshi.High = high
+		c.Indicators.HeikinAshi.Low = low
 	}
 }

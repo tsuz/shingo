@@ -27,6 +27,9 @@ func (cs *Candlesticks) AppendMACD(args IndicatorInputArg) error {
 		return errors.New("Period1 must be less than Period2 in MACD")
 	}
 
+	cs.mux.Lock()
+	defer cs.mux.Unlock()
+
 	cl := cs.Total()
 	if cl < 1 {
 		return nil

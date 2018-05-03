@@ -12,6 +12,10 @@ func (cs *Candlesticks) AppendIchimokuCloud(arg IndicatorInputArg) (err error) {
 	kijun := arg.IchimokuCloudKijun
 	// sb := arg.IchimokuCloudSenkouB
 	// chik := arg.IchimokuCloudChikou
+
+	cs.mux.Lock()
+	defer cs.mux.Unlock()
+
 	if limit < 1 {
 		limit = cs.Total()
 	}

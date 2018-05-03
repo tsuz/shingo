@@ -2,6 +2,7 @@ package shingo
 
 import (
 	"fmt"
+	"sync"
 )
 
 type CandlestickMeta interface {
@@ -20,6 +21,7 @@ type Candlesticks struct {
 	CandlestickMeta
 	CandlestickIndicators
 
+	mux        sync.Mutex
 	interval   Interval
 	items      []*Candlestick
 	maxCandles int
