@@ -10,6 +10,10 @@ func (cs *Candlesticks) AppendSMA(arg IndicatorInputArg) error {
 	if period < 1 {
 		return errors.Wrap(nil, "Period must be positive")
 	}
+
+	cs.mux.Lock()
+	defer cs.mux.Unlock()
+
 	list := cs
 	l := cs.Total()
 	if l < 1 {
