@@ -57,5 +57,10 @@ func setHeikinAshiDelta(c *Candlestick, open, close, high, low float64) {
 			High:  high,
 			Low:   low,
 		}
+	} else {
+		c.Indicators.HeikinAshi.Open = open
+		c.Indicators.HeikinAshi.Close = close
+		c.Indicators.HeikinAshi.High = high
+		c.Indicators.HeikinAshi.Low = low
 	}
 }
