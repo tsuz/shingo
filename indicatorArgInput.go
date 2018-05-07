@@ -1,6 +1,8 @@
 package shingo
 
 type IndicatorInputArg struct {
+	Type IndicatorType
+
 	Limit      int
 	Period     int
 	Multiplier float64

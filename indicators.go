@@ -9,6 +9,21 @@ type Indicators struct {
 	ATRs           map[int]*ATRDelta
 	SuperTrends    map[int]map[float64]*SuperTrendDelta
 	HeikinAshi     *HeikinAshiDelta
+	StdDevs        map[int]*StdDevDelta
+}
+
+// Get provides indicator query interface
+func (in *Indicators) Get(arg IndicatorInputArg) interface{} {
+	p := arg.Period
+	t := arg.Type
+	switch t {
+	case IndicatorTypeStdDev:
+		if in.StdDevs == nil {
+			return nil
+		}
+		return in.StdDevs[p]
+	}
+	return nil
 }
 
 // SMADelta is the value for this period and change since last period
@@ -56,6 +71,10 @@ type HeikinAshiDelta struct {
 	High  float64
 	Low   float64
 	Close float64
+}
+
+type StdDevDelta struct {
+	Value float64
 }
 
 type Trend int

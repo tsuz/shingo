@@ -10,4 +10,5 @@ const (
 	IndicatorTypeATR           IndicatorType = "IndicatorTypeATR"
 	IndicatorTypeSuperTrend    IndicatorType = "IndicatorTypeSuperTrend"
 	IndicatorTypeHeikinAshi    IndicatorType = "IndicatorTypeHeikinAshi"
+	IndicatorTypeStdDev        IndicatorType = "IndicatorTypeStdDev"
 )
