@@ -12,4 +12,5 @@ const (
 	IndicatorTypeHeikinAshi    IndicatorType = "IndicatorTypeHeikinAshi"
 	IndicatorTypeStdDev        IndicatorType = "IndicatorTypeStdDev"
 	IndicatorTypeHighest       IndicatorType = "IndicatorTypeHighest"
+	IndicatorTypeLowest        IndicatorType = "IndicatorTypeLowest"
 )

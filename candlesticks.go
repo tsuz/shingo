@@ -85,6 +85,8 @@ func (cs *Candlesticks) GenerateIndicator(i IndicatorType, arg IndicatorInputArg
 		return cs.AppendStdDev(arg)
 	case IndicatorTypeHighest:
 		return cs.AppendHighest(arg)
+	case IndicatorTypeLowest:
+		return cs.AppendLowest(arg)
 	}
 	return fmt.Errorf("Error unsupported indicator type %+v", i)
 }

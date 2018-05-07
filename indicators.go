@@ -11,6 +11,7 @@ type Indicators struct {
 	HeikinAshi     *HeikinAshiDelta
 	StdDevs        map[int]*StdDevDelta
 	Highest        map[int]float64
+	Lowest         map[int]float64
 }
 
 // Get provides indicator query interface
@@ -28,6 +29,11 @@ func (in *Indicators) Get(arg IndicatorInputArg) interface{} {
 			return nil
 		}
 		return in.Highest[p]
+	case IndicatorTypeLowest:
+		if in.Lowest == nil {
+			return nil
+		}
+		return in.Lowest[p]
 	}
 	return nil
 }
