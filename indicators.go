@@ -10,6 +10,7 @@ type Indicators struct {
 	SuperTrends    map[int]map[float64]*SuperTrendDelta
 	HeikinAshi     *HeikinAshiDelta
 	StdDevs        map[int]*StdDevDelta
+	Highest        map[int]float64
 }
 
 // Get provides indicator query interface
@@ -22,6 +23,11 @@ func (in *Indicators) Get(arg IndicatorInputArg) interface{} {
 			return nil
 		}
 		return in.StdDevs[p]
+	case IndicatorTypeHighest:
+		if in.Highest == nil {
+			return nil
+		}
+		return in.Highest[p]
 	}
 	return nil
 }
