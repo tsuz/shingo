@@ -40,6 +40,8 @@ func (cs *Candlesticks) AppendHighest(arg IndicatorInputArg) error {
 			}
 		}
 		if highest == 0.0 {
+			highest = v.Close
+			lastHighIdx = i
 			for j := i - p + 1; j < i; j++ {
 				g := cs.ItemAtIndex(j)
 				if g == nil {
@@ -50,10 +52,6 @@ func (cs *Candlesticks) AppendHighest(arg IndicatorInputArg) error {
 					lastHighIdx = j
 				}
 			}
-		}
-		if highest == 0.0 {
-			highest = v.Close
-			lastHighIdx = i
 		}
 		if v.Indicators == nil {
 			v.Indicators = &Indicators{}
