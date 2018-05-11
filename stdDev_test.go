@@ -132,28 +132,20 @@ func TestStdDev(t *testing.T) {
 		}
 		for i, e := range st.expected {
 			v := cs.ItemAtIndex(i)
-			indicator := v.Indicators
-			if e == nil && indicator == nil {
+			delta := v.GetStdDev(st.arg.Period)
+			if e == nil && delta == nil {
 				continue
 			}
-			if e != nil && indicator == nil {
+			if e != nil && delta == nil {
 				t.Fatalf("Expected non-nil: %+v but got nil", e)
 			}
 
-			delta := v.Indicators.Get(st.arg)
 			if e == nil && delta != nil {
 				t.Fatalf("Expected nil but got non nil %+v  %d", delta, i)
 			}
 
-			if delta == nil {
-				t.Fatalf("Expected standard deviation delta to be non nil")
-			}
-			if stdDev, ok := delta.(*StdDevDelta); ok {
-				if !equalWithinPct(e.Value, stdDev.Value, 0.005) {
-					t.Errorf("Expected value to be: %+v but got %+v", e.Value, stdDev.Value)
-				}
-			} else {
-				t.Fatalf("Expected StdDevDelta but got type: %T", delta)
+			if !equalWithinPct(e.Value, delta.Value, 0.005) {
+				t.Errorf("Expected value to be: %+v but got %+v", e.Value, delta.Value)
 			}
 		}
 	}

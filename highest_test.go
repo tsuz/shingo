@@ -98,20 +98,13 @@ func TestHighest(t *testing.T) {
 		}
 		for i, e := range st.expected {
 			v := cs.ItemAtIndex(i)
-			indicator := v.Indicators
-			if indicator == nil {
+			high := v.GetHighest(st.arg.Period)
+			if high == nil {
 				continue
 			}
-			high := v.Indicators.Get(st.arg)
-			if high == nil {
-				t.Fatalf("Expected highest to be non nil")
-			}
-			if val, ok := high.(float64); ok {
-				if !equalWithinPct(e, val, 0.005) {
-					t.Errorf("Expected value to be: %+v but got %+v", e, val)
-				}
-			} else {
-				t.Fatalf("Expected type float64 but got type: %T", high)
+
+			if !equalWithinPct(e, *high, 0.005) {
+				t.Errorf("Expected value to be: %+v but got %+v", e, high)
 			}
 		}
 	}

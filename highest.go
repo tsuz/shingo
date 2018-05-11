@@ -30,7 +30,11 @@ func (cs *Candlesticks) AppendHighest(arg IndicatorInputArg) error {
 			// get from previous high
 			pv := cs.ItemAtIndex(i - 1)
 			if pv != nil {
-				lastHigh := pv.Indicators.Highest[p]
+				lh := pv.GetHighest(p)
+				if lh == nil {
+					continue
+				}
+				lastHigh := *lh
 				if lastHigh > v.Close {
 					highest = lastHigh
 				} else {
@@ -57,10 +61,18 @@ func (cs *Candlesticks) AppendHighest(arg IndicatorInputArg) error {
 			v.Indicators = &Indicators{}
 		}
 		if v.Indicators.Highest == nil {
-			v.Indicators.Highest = make(map[int]float64)
+			v.Indicators.Highest = make(map[int]*float64)
 		}
-		v.Indicators.Highest[p] = highest
+		v.Indicators.Highest[p] = &highest
 	}
 
 	return nil
+}
+
+// GetHighest gets highest value for given past periods
+func (c *Candlestick) GetHighest(period int) *float64 {
+	if c.Indicators == nil || c.Indicators.Highest == nil {
+		return nil
+	}
+	return c.Indicators.Highest[period]
 }

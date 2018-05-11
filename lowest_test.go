@@ -129,20 +129,12 @@ func TestLowest(t *testing.T) {
 		}
 		for i, e := range st.expected {
 			v := cs.ItemAtIndex(i)
-			indicator := v.Indicators
-			if indicator == nil {
-				continue
-			}
-			low := v.Indicators.Get(st.arg)
+			low := v.GetLowest(st.arg.Period)
 			if low == nil {
 				t.Fatalf("Expected lowest to be non nil")
 			}
-			if val, ok := low.(float64); ok {
-				if !equalWithinPct(e, val, 0.005) {
-					t.Errorf("Expected value to be: %+v but got %+v at idx: %d", e, val, i)
-				}
-			} else {
-				t.Fatalf("Expected type float64 but got type: %T", low)
+			if !equalWithinPct(e, *low, 0.005) {
+				t.Errorf("Expected value to be: %+v but got %+v at idx: %d", e, *low, i)
 			}
 		}
 	}

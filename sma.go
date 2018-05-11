@@ -42,7 +42,7 @@ func (cs *Candlesticks) AppendSMA(arg IndicatorInputArg) error {
 			}
 			avg = avg / float64(period)
 
-			setSMAIndicator(v, period, avg)
+			v.setSMA(period, avg)
 
 			continue
 		}
@@ -67,7 +67,7 @@ func (cs *Candlesticks) AppendSMA(arg IndicatorInputArg) error {
 			break
 		}
 
-		setSMAIndicator(v, period, avg)
+		v.setSMA(period, avg)
 
 		count++
 
@@ -75,14 +75,22 @@ func (cs *Candlesticks) AppendSMA(arg IndicatorInputArg) error {
 	return nil
 }
 
-func setSMAIndicator(v *Candlestick, period int, avg float64) {
-	if v.Indicators == nil {
-		v.Indicators = &Indicators{}
+// GetSMA returns SMA value for this candlestick for given period
+func (c *Candlestick) GetSMA(period int) *SMADelta {
+	if c.Indicators == nil || c.Indicators.SMAs == nil {
+		return nil
 	}
-	if v.Indicators.SMAs == nil {
-		v.Indicators.SMAs = make(map[int]*SMADelta)
+	return c.Indicators.SMAs[period]
+}
+
+func (c *Candlestick) setSMA(period int, avg float64) {
+	if c.Indicators == nil {
+		c.Indicators = &Indicators{}
 	}
-	v.Indicators.SMAs[period] = &SMADelta{
+	if c.Indicators.SMAs == nil {
+		c.Indicators.SMAs = make(map[int]*SMADelta)
+	}
+	c.Indicators.SMAs[period] = &SMADelta{
 		Value: avg,
 	}
 }

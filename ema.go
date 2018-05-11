@@ -51,24 +51,32 @@ func (cs *Candlesticks) AppendEMA(arg IndicatorInputArg) (err error) {
 			continue
 		}
 
-		setEMAIndicator(v, period, emaValue, prevEmaValue)
+		v.setEMA(period, emaValue, prevEmaValue)
 
 	}
 	return nil
 }
 
-func setEMAIndicator(v *Candlestick, period int, emaValue float64, prevEma float64) {
-	if v.Indicators == nil {
-		v.Indicators = &Indicators{}
+// GetEMA returns EMA value for this candlestick for given period
+func (c *Candlestick) GetEMA(period int) *EMADelta {
+	if c.Indicators == nil || c.Indicators.EMAs == nil {
+		return nil
 	}
-	if v.Indicators.EMAs == nil {
-		v.Indicators.EMAs = make(map[int]*EMADelta)
+	return c.Indicators.EMAs[period]
+}
+
+func (c *Candlestick) setEMA(period int, emaValue float64, prevEma float64) {
+	if c.Indicators == nil {
+		c.Indicators = &Indicators{}
+	}
+	if c.Indicators.EMAs == nil {
+		c.Indicators.EMAs = make(map[int]*EMADelta)
 	}
 	chg := emaValue/prevEma - 1
 	if prevEma == 0 {
 		chg = 0
 	}
-	v.Indicators.EMAs[period] = &EMADelta{
+	c.Indicators.EMAs[period] = &EMADelta{
 		Value:  emaValue,
 		Change: chg,
 	}

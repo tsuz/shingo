@@ -21,7 +21,7 @@ func (cs *Candlesticks) AppendHeikinAshi(arg IndicatorInputArg) error {
 		v := cs.ItemAtIndex(i)
 
 		close := (v.Open + v.High + v.Low + v.Close) / 4
-		prev := getHeikinAshiDelta(p)
+		prev := p.GetHeikinAshi()
 		var open, high, low float64
 		if prev == nil {
 			open = v.Open
@@ -33,20 +33,21 @@ func (cs *Candlesticks) AppendHeikinAshi(arg IndicatorInputArg) error {
 			low = findLowestValue(v.Low, open, close)
 		}
 
-		setHeikinAshiDelta(v, open, close, high, low)
+		v.setHeikinAshi(open, close, high, low)
 	}
 
 	return nil
 }
 
-func getHeikinAshiDelta(c *Candlestick) *HeikinAshiDelta {
+// GetHeikinAshi provides heikin ashi value for this candlestick
+func (c *Candlestick) GetHeikinAshi() *HeikinAshiDelta {
 	if c == nil || c.Indicators == nil {
 		return nil
 	}
 	return c.Indicators.HeikinAshi
 }
 
-func setHeikinAshiDelta(c *Candlestick, open, close, high, low float64) {
+func (c *Candlestick) setHeikinAshi(open, close, high, low float64) {
 	if c.Indicators == nil {
 		c.Indicators = &Indicators{}
 	}

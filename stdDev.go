@@ -37,7 +37,7 @@ func (cs *Candlesticks) AppendStdDev(arg IndicatorInputArg) error {
 			// not enough data to generate average
 			continue
 		}
-		avg := v.Indicators.SMAs[p].Value
+		avg := v.GetSMA(p).Value
 		var total float64
 		for j := 0; j < p; j++ {
 			pv := cs.ItemAtIndex(i - j)
@@ -47,13 +47,25 @@ func (cs *Candlesticks) AppendStdDev(arg IndicatorInputArg) error {
 		}
 		devSqAvg := total / float64(p)
 		sqrt := math.Sqrt(devSqAvg)
-		if v.Indicators == nil {
-			v.Indicators = &Indicators{}
-		}
-		if v.Indicators.StdDevs == nil {
-			v.Indicators.StdDevs = make(map[int]*StdDevDelta)
-		}
-		v.Indicators.StdDevs[p] = &StdDevDelta{Value: sqrt}
+		v.setStdDev(p, sqrt)
 	}
 	return nil
+}
+
+// GetStdDev gets standard deviation value for this candlestick for given lookback period
+func (c *Candlestick) GetStdDev(period int) *StdDevDelta {
+	if c.Indicators == nil || c.Indicators.StdDevs == nil {
+		return nil
+	}
+	return c.Indicators.StdDevs[period]
+}
+
+func (c *Candlestick) setStdDev(p int, sqrt float64) {
+	if c.Indicators == nil {
+		c.Indicators = &Indicators{}
+	}
+	if c.Indicators.StdDevs == nil {
+		c.Indicators.StdDevs = make(map[int]*StdDevDelta)
+	}
+	c.Indicators.StdDevs[p] = &StdDevDelta{Value: sqrt}
 }

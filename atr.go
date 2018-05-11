@@ -31,11 +31,11 @@ func (cs *Candlesticks) AppendATR(arg IndicatorInputArg) error {
 		var tr float64
 		if p != nil {
 			tr = findHighestValue(v.High-v.Low, math.Abs(v.High-p.Close), math.Abs(v.Low-p.Close))
-			prev := getATR(p, period)
+			prev := p.GetATR(period)
 			if count < period {
 				firstTRTotal += tr
 			} else if count == period {
-				setATRIndicator(v, period, (firstTRTotal+tr)/float64(period), 0)
+				v.setATR(period, (firstTRTotal+tr)/float64(period), 0)
 			} else {
 				tr = (prev.Value*float64(period-1) + tr) / float64(period)
 				var chg float64
@@ -44,7 +44,7 @@ func (cs *Candlesticks) AppendATR(arg IndicatorInputArg) error {
 				} else {
 					chg = 0
 				}
-				setATRIndicator(v, period, tr, chg)
+				v.setATR(period, tr, chg)
 			}
 		} else {
 			firstTRTotal = v.High - v.Low
@@ -80,30 +80,22 @@ func findLowestValue(vals ...float64) float64 {
 	return f
 }
 
-func setATRIndicator(v *Candlestick, period int, val float64, chg float64) {
-	if v.Indicators == nil {
-		v.Indicators = &Indicators{}
+// GetSMA returns SMA value for this candlestick for given period
+func (c *Candlestick) GetATR(period int) *ATRDelta {
+	if c.Indicators == nil || c.Indicators.ATRs == nil {
+		return nil
 	}
-	if v.Indicators.ATRs == nil {
-		v.Indicators.ATRs = make(map[int]*ATRDelta)
-	}
-	if v.Indicators.ATRs[period] == nil {
-		v.Indicators.ATRs[period] = &ATRDelta{Value: val, Change: chg}
-	}
+	return c.Indicators.ATRs[period]
 }
 
-func getATR(p *Candlestick, period int) *ATRDelta {
-	if p == nil {
-		return nil
+func (c *Candlestick) setATR(period int, val float64, chg float64) {
+	if c.Indicators == nil {
+		c.Indicators = &Indicators{}
 	}
-	if p.Indicators == nil {
-		return nil
+	if c.Indicators.ATRs == nil {
+		c.Indicators.ATRs = make(map[int]*ATRDelta)
 	}
-	if p.Indicators.ATRs == nil {
-		return nil
+	if c.Indicators.ATRs[period] == nil {
+		c.Indicators.ATRs[period] = &ATRDelta{Value: val, Change: chg}
 	}
-	if p.Indicators.ATRs[period] == nil {
-		return nil
-	}
-	return p.Indicators.ATRs[period]
 }
