@@ -169,7 +169,7 @@ func TestAppendSMA(t *testing.T) {
 			sma := c.GetSMA(period)
 			if v.expected[i] == nil {
 				if sma != nil {
-					t.Fatalf("Expected nil but got %+v for %s", c.Indicators, v.title)
+					t.Fatalf("Expected nil but got %+v for %s", sma, v.title)
 				}
 				continue
 			} else if v.expected[i] != nil && sma == nil {

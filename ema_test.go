@@ -174,7 +174,7 @@ func TestAppendEMA(t *testing.T) {
 			ema := c.GetEMA(v.args.Period)
 			if v.expected[i] == nil {
 				if ema != nil {
-					t.Errorf("Expected nil but got %+v in Test Idx: %+v idx: %+v for %s", c.Indicators, ti, i, v.title)
+					t.Errorf("Expected nil but got %+v in Test Idx: %+v idx: %+v for %s", ema, ti, i, v.title)
 				}
 				continue
 			} else if v.expected[i] != nil && ema == nil {

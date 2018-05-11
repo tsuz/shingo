@@ -90,12 +90,12 @@ func TestAppendATR(t *testing.T) {
 			c := cs.ItemAtIndex(i)
 			atr := c.GetATR(14)
 			if v.expected[i] == nil {
-				if c.Indicators != nil && atr != nil {
-					t.Errorf("Expected nil but got %+v for test: %s, index: %d", c.Indicators, v.title, i)
+				if atr != nil {
+					t.Errorf("Expected nil but got %+v for test: %s, index: %d", atr, v.title, i)
 				}
 				continue
-			} else if v.expected[i] != nil && (c.Indicators == nil || atr == nil || atr == nil) {
-				t.Errorf("Expected non nil but got nil %+v for test: %s, index: %d", c.Indicators, v.title, i)
+			} else if v.expected[i] != nil && atr == nil {
+				t.Errorf("Expected non nil but got nil %+v for test: %s, index: %d", atr, v.title, i)
 				continue
 			}
 			if !almostEqual(atr.Value, v.expected[i].Value, 0.01) {

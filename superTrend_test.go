@@ -179,12 +179,12 @@ func TestAppendSuperTrend(t *testing.T) {
 			c := cs.ItemAtIndex(i)
 			st := c.GetSuperTrend(10, 3)
 			if v.expected[i] == nil {
-				if c.Indicators != nil && st != nil {
-					t.Errorf("Expected nil but got %+v for test: %s, index: %d", c.Indicators, v.title, i)
+				if st != nil {
+					t.Errorf("Expected nil but got %+v for test: %s, index: %d", st, v.title, i)
 				}
 				continue
 			} else if v.expected[i] != nil && st == nil {
-				t.Errorf("Expected non nil but got nil %+v for test: %s, index: %d", c.Indicators, v.title, i)
+				t.Errorf("Expected non nil but got nil %+v for test: %s, index: %d", st, v.title, i)
 				continue
 			}
 			e := v.expected[i]

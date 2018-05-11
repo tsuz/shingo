@@ -161,8 +161,8 @@ func TestHeikinAshi(t *testing.T) {
 			ha := c.GetHeikinAshi()
 			str += fmt.Sprintf("%v,", c.Close)
 			if v.expected[i] == nil {
-				if c.Indicators != nil && ha != nil {
-					t.Errorf("Expected nil but got %+v for test %s index %d", c.Indicators, v.title, i)
+				if ha != nil {
+					t.Errorf("Expected nil but got %+v for test %s index %d", ha, v.title, i)
 				}
 				continue
 			} else if v.expected[i] != nil && ha == nil {

@@ -241,7 +241,7 @@ func TestAppendMACD(t *testing.T) {
 			str += fmt.Sprintf("%v,", c.Close)
 			macd := c.GetMACD(12, 26, 9)
 			if v.expected[i] == nil {
-				if c.Indicators != nil && macd != nil {
+				if macd != nil {
 					t.Errorf("Expected nil but got %+v for test %s index %d", macd, v.title, i)
 				}
 				continue
