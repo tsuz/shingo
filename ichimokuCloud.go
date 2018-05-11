@@ -96,7 +96,7 @@ func (cs *Candlesticks) AppendIchimokuCloud(arg IndicatorInputArg) (err error) {
 			if i < startIndicatorIdx {
 				continue
 			}
-			appendIchimokuCloudIndicator(v, tenkan, kijun, tenkanVal, 0)
+			v.setIchimokuCloud(kijun, tenkan, 0, tenkanVal)
 			continue
 		}
 
@@ -120,21 +120,33 @@ func (cs *Candlesticks) AppendIchimokuCloud(arg IndicatorInputArg) (err error) {
 		if i < startIndicatorIdx {
 			continue
 		}
-		appendIchimokuCloudIndicator(v, tenkan, kijun, tenkanVal, kijunVal)
+		v.setIchimokuCloud(kijun, tenkan, kijunVal, tenkanVal)
 	}
 	return
 }
 
-func appendIchimokuCloudIndicator(v *Candlestick, t int, k int, tv float64, kv float64) {
-	if v.Indicators == nil {
-		v.Indicators = &Indicators{}
+// GetIchimokuCloud gets ichimoku cloud value for this candlestick and given kijun,tenkan values
+func (c *Candlestick) GetIchimokuCloud(k, t int) *IchimokuCloudDelta {
+	if c.Indicators == nil {
+		return nil
 	}
 	key := fmt.Sprintf("%d,%d", t, k)
-	if v.Indicators.IchimokuClouds == nil {
-		v.Indicators.IchimokuClouds = make(map[string]*IchimokuCloudDelta)
+	if c.Indicators.IchimokuClouds == nil {
+		return nil
 	}
-	if v.Indicators.IchimokuClouds[key] == nil {
-		v.Indicators.IchimokuClouds[key] = &IchimokuCloudDelta{
+	return c.Indicators.IchimokuClouds[key]
+}
+
+func (c *Candlestick) setIchimokuCloud(k, t int, kv, tv float64) {
+	if c.Indicators == nil {
+		c.Indicators = &Indicators{}
+	}
+	key := fmt.Sprintf("%d,%d", t, k)
+	if c.Indicators.IchimokuClouds == nil {
+		c.Indicators.IchimokuClouds = make(map[string]*IchimokuCloudDelta)
+	}
+	if c.Indicators.IchimokuClouds[key] == nil {
+		c.Indicators.IchimokuClouds[key] = &IchimokuCloudDelta{
 			Tenkan:  tv,
 			Kijun:   kv,
 			SenkouA: (tv + kv) / 2,

@@ -177,16 +177,16 @@ func TestAppendSuperTrend(t *testing.T) {
 
 		for i := range v.candles {
 			c := cs.ItemAtIndex(i)
+			st := c.GetSuperTrend(10, 3)
 			if v.expected[i] == nil {
-				if c.Indicators != nil && c.Indicators.SuperTrends[10][3] != nil {
-					t.Errorf("Expected nil but got %+v for test: %s, index: %d", c.Indicators, v.title, i)
+				if st != nil {
+					t.Errorf("Expected nil but got %+v for test: %s, index: %d", st, v.title, i)
 				}
 				continue
-			} else if v.expected[i] != nil && (c.Indicators == nil || c.Indicators.SuperTrends == nil || c.Indicators.SuperTrends[10][3] == nil) {
-				t.Errorf("Expected non nil but got nil %+v for test: %s, index: %d", c.Indicators, v.title, i)
+			} else if v.expected[i] != nil && st == nil {
+				t.Errorf("Expected non nil but got nil %+v for test: %s, index: %d", st, v.title, i)
 				continue
 			}
-			st := c.Indicators.SuperTrends[10][3]
 			e := v.expected[i]
 			// i > 20 because trend is eventual consistency
 			// and it will be inaccurate towards the beginning

@@ -171,28 +171,28 @@ func TestAppendEMA(t *testing.T) {
 		}
 		for i := range v.candles {
 			c := cs.ItemAtIndex(i)
+			ema := c.GetEMA(v.args.Period)
 			if v.expected[i] == nil {
-				if c.Indicators != nil {
-					t.Errorf("Expected nil but got %+v in Test Idx: %+v idx: %+v for %s", c.Indicators, ti, i, v.title)
+				if ema != nil {
+					t.Errorf("Expected nil but got %+v in Test Idx: %+v idx: %+v for %s", ema, ti, i, v.title)
 				}
 				continue
-			} else if v.expected[i] != nil && c.Indicators == nil {
+			} else if v.expected[i] != nil && ema == nil {
 				t.Errorf("Expected non nil but got nil for %s", v.title)
 				continue
 			}
-			period := v.args.Period
-			if !almostEqual(c.Indicators.EMAs[period].Value, v.expected[i].Value, 0.0001) {
+			if !almostEqual(ema.Value, v.expected[i].Value, 0.0001) {
 				t.Errorf("Expected value %+v but got %+v for test  %+v index %+v for %s",
 					v.expected[i].Value,
-					c.Indicators.EMAs[period].Value,
+					ema.Value,
 					ti,
 					i,
 					v.title)
 			}
-			if !almostEqual(c.Indicators.EMAs[period].Change, v.expected[i].Change, 0.0001) {
+			if !almostEqual(ema.Change, v.expected[i].Change, 0.0001) {
 				t.Errorf("Expected change %+v but got %+v for test  %+v index %+v for %s",
 					v.expected[i].Change,
-					c.Indicators.EMAs[period].Change,
+					ema.Change,
 					ti,
 					i,
 					v.title)

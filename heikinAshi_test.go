@@ -158,17 +158,17 @@ func TestHeikinAshi(t *testing.T) {
 		var str string
 		for i := range v.candles {
 			c := cs.ItemAtIndex(i)
+			ha := c.GetHeikinAshi()
 			str += fmt.Sprintf("%v,", c.Close)
 			if v.expected[i] == nil {
-				if c.Indicators != nil && c.Indicators.HeikinAshi != nil {
-					t.Errorf("Expected nil but got %+v for test %s index %d", c.Indicators, v.title, i)
+				if ha != nil {
+					t.Errorf("Expected nil but got %+v for test %s index %d", ha, v.title, i)
 				}
 				continue
-			} else if v.expected[i] != nil && c.Indicators.HeikinAshi == nil {
-				t.Errorf("Expected non nil but got nil %+v for test %s index %d", c.Indicators.HeikinAshi, v.title, i)
+			} else if v.expected[i] != nil && ha == nil {
+				t.Errorf("Expected non nil but got nil %+v for test %s index %d", ha, v.title, i)
 				continue
 			}
-			ha := c.Indicators.HeikinAshi
 			if !almostEqual(ha.Open, v.expected[i].Open, 0.01) {
 				t.Errorf("Expected Open to be: %+v, but got: %+v, test: %s, index %d",
 					v.expected[i].Open,

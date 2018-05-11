@@ -10,32 +10,8 @@ type Indicators struct {
 	SuperTrends    map[int]map[float64]*SuperTrendDelta
 	HeikinAshi     *HeikinAshiDelta
 	StdDevs        map[int]*StdDevDelta
-	Highest        map[int]float64
-	Lowest         map[int]float64
-}
-
-// Get provides indicator query interface
-func (in *Indicators) Get(arg IndicatorInputArg) interface{} {
-	p := arg.Period
-	t := arg.Type
-	switch t {
-	case IndicatorTypeStdDev:
-		if in.StdDevs == nil {
-			return nil
-		}
-		return in.StdDevs[p]
-	case IndicatorTypeHighest:
-		if in.Highest == nil {
-			return nil
-		}
-		return in.Highest[p]
-	case IndicatorTypeLowest:
-		if in.Lowest == nil {
-			return nil
-		}
-		return in.Lowest[p]
-	}
-	return nil
+	Highest        map[int]*float64
+	Lowest         map[int]*float64
 }
 
 // SMADelta is the value for this period and change since last period

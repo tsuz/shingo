@@ -58,16 +58,12 @@ func (cs *Candlesticks) AppendMACD(args IndicatorInputArg) error {
 	}
 	for i := 0; i < cl; i++ {
 		v := cs.ItemAtIndex(i)
-		if v.Indicators == nil {
+		ema1 := v.GetEMA(period1)
+		ema2 := v.GetEMA(period2)
+		if ema1 == nil || ema2 == nil {
 			continue
 		}
-		if v.Indicators.EMAs[period1] == nil {
-			continue
-		}
-		if v.Indicators.EMAs[period2] == nil {
-			continue
-		}
-		val := v.Indicators.EMAs[period1].Value - v.Indicators.EMAs[period2].Value
+		val := ema1.Value - ema2.Value
 		c, err := NewCandlestick(0, val, 0, 0, time.Time{}, 0)
 		if err != nil {
 			return errors.Wrap(err, "Error creating candlestick in macd signal line")
@@ -95,33 +91,45 @@ func (cs *Candlesticks) AppendMACD(args IndicatorInputArg) error {
 		ci := int(math.Abs(float64(cl - i - cstl)))
 
 		vi := cst.ItemAtIndex(ci)
-		if vi != nil && (vi.Indicators == nil || vi.Indicators.EMAs[signalLine] == nil) {
+
+		if vi != nil && vi.GetEMA(signalLine) == nil {
 			continue
 		}
 
-		macdValue := v.Indicators.EMAs[period1].Value - v.Indicators.EMAs[period2].Value
+		macdValue := v.GetEMA(period1).Value - v.GetEMA(period2).Value
 
-		signalValue := vi.Indicators.EMAs[signalLine].Value
+		signalValue := vi.GetEMA(signalLine).Value
 
-		setMACDIndicator(v, period1, period2, signalLine, macdValue, signalValue)
+		v.setMACD(period1, period2, signalLine, macdValue, signalValue)
 
 		count++
 	}
 	return nil
 }
 
-func setMACDIndicator(v *Candlestick, period1 int, period2 int, signal int, macdValue float64, signalValue float64) {
-	if v.Indicators.MACDs == nil {
-		v.Indicators.MACDs = make(map[int]map[int]map[int]*MACDDelta)
+// GetMACD gets MACD value for this candlestick given fast, slow and signal line value
+func (c *Candlestick) GetMACD(period1, period2, signal int) *MACDDelta {
+	if c.Indicators == nil || c.Indicators.MACDs == nil {
+		return nil
 	}
-	if v.Indicators.MACDs[period1] == nil {
-		v.Indicators.MACDs[period1] = make(map[int]map[int]*MACDDelta)
+	if c.Indicators.MACDs[period1] == nil || c.Indicators.MACDs[period1][period2] == nil {
+		return nil
 	}
-	if v.Indicators.MACDs[period1][period2] == nil {
-		v.Indicators.MACDs[period1][period2] = make(map[int]*MACDDelta)
+	return c.Indicators.MACDs[period1][period2][signal]
+}
+
+func (c *Candlestick) setMACD(period1 int, period2 int, signal int, macdValue float64, signalValue float64) {
+	if c.Indicators.MACDs == nil {
+		c.Indicators.MACDs = make(map[int]map[int]map[int]*MACDDelta)
 	}
-	if v.Indicators.MACDs[period1][period2][signal] == nil {
-		v.Indicators.MACDs[period1][period2][signal] = &MACDDelta{
+	if c.Indicators.MACDs[period1] == nil {
+		c.Indicators.MACDs[period1] = make(map[int]map[int]*MACDDelta)
+	}
+	if c.Indicators.MACDs[period1][period2] == nil {
+		c.Indicators.MACDs[period1][period2] = make(map[int]*MACDDelta)
+	}
+	if c.Indicators.MACDs[period1][period2][signal] == nil {
+		c.Indicators.MACDs[period1][period2][signal] = &MACDDelta{
 			MACDValue:     macdValue,
 			SignalValue:   signalValue,
 			MACDHistogram: macdValue - signalValue,

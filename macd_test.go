@@ -239,34 +239,34 @@ func TestAppendMACD(t *testing.T) {
 		for i := range v.candles {
 			c := cs.ItemAtIndex(i)
 			str += fmt.Sprintf("%v,", c.Close)
+			macd := c.GetMACD(12, 26, 9)
 			if v.expected[i] == nil {
-				if c.Indicators != nil && c.Indicators.MACDs[12][26][9] != nil {
-					t.Errorf("Expected nil but got %+v for test %s index %d", c.Indicators, v.title, i)
+				if macd != nil {
+					t.Errorf("Expected nil but got %+v for test %s index %d", macd, v.title, i)
 				}
 				continue
-			} else if v.expected[i] != nil && (c.Indicators.MACDs == nil || c.Indicators.MACDs[12] == nil || c.Indicators.MACDs[12][26] == nil || c.Indicators.MACDs[12][26][9] == nil) {
-				t.Errorf("Expected non nil but got nil %+v for test %s index %d", c.Indicators.MACDs, v.title, i)
+			} else if v.expected[i] != nil && macd == nil {
+				t.Errorf("Expected non nil but got nil %+v for test %s index %d", macd, v.title, i)
 				continue
 			}
-			mcds := c.Indicators.MACDs[12][26][9]
-			if !almostEqual(mcds.MACDValue, v.expected[i].MACDValue, 0.001) {
+			if !almostEqual(macd.MACDValue, v.expected[i].MACDValue, 0.001) {
 				t.Errorf("Expected MACDValue %+v but got %+v for test %s index %d",
 					v.expected[i].MACDValue,
-					mcds.MACDValue,
+					macd.MACDValue,
 					v.title,
 					i)
 			}
-			if !almostEqual(mcds.MACDHistogram, v.expected[i].MACDHistogram, 0.001) {
+			if !almostEqual(macd.MACDHistogram, v.expected[i].MACDHistogram, 0.001) {
 				t.Errorf("Expected MACDHistogram %+v but got %+v for test %s index %d",
 					v.expected[i].MACDHistogram,
-					mcds.MACDHistogram,
+					macd.MACDHistogram,
 					v.title,
 					i)
 			}
-			if !almostEqual(mcds.SignalValue, v.expected[i].SignalValue, 0.001) {
+			if !almostEqual(macd.SignalValue, v.expected[i].SignalValue, 0.001) {
 				t.Errorf("Expected SignalValue %+v but got %+v for test %s index %d",
 					v.expected[i].SignalValue,
-					mcds.SignalValue,
+					macd.SignalValue,
 					v.title,
 					i)
 			}

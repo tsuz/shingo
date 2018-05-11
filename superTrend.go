@@ -46,9 +46,9 @@ func (cs *Candlesticks) AppendSuperTrend(arg IndicatorInputArg) error {
 		}
 
 		p := cs.ItemAtIndex(i - 1)
-		pst := getSuperTrend(p, period, multi)
+		pst := p.GetSuperTrend(period, multi)
 		v := cs.ItemAtIndex(i)
-		atr := getATR(v, arg.Period)
+		atr := v.GetATR(arg.Period)
 		if atr == nil {
 			continue
 		}
@@ -86,13 +86,14 @@ func (cs *Candlesticks) AppendSuperTrend(arg IndicatorInputArg) error {
 			trend = Undeterminable
 		}
 
-		setSuperTrend(v, period, multi, short, long, trend)
+		v.setSuperTrend(period, multi, short, long, trend)
 	}
 
 	return nil
 }
 
-func getSuperTrend(c *Candlestick, period int, multi float64) *SuperTrendDelta {
+// GetSuperTrend gets super trend value for this candlestick, given period and multiplier
+func (c *Candlestick) GetSuperTrend(period int, multi float64) *SuperTrendDelta {
 	if c == nil {
 		return nil
 	}
@@ -108,7 +109,7 @@ func getSuperTrend(c *Candlestick, period int, multi float64) *SuperTrendDelta {
 	return c.Indicators.SuperTrends[period][multi]
 }
 
-func setSuperTrend(c *Candlestick, period int, multi float64, short float64, long float64, trend Trend) {
+func (c *Candlestick) setSuperTrend(period int, multi float64, short float64, long float64, trend Trend) {
 	if c == nil {
 		return
 	}

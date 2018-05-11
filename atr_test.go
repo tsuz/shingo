@@ -88,27 +88,27 @@ func TestAppendATR(t *testing.T) {
 
 		for i := range v.candles {
 			c := cs.ItemAtIndex(i)
+			atr := c.GetATR(14)
 			if v.expected[i] == nil {
-				if c.Indicators != nil && c.Indicators.ATRs[14] != nil {
-					t.Errorf("Expected nil but got %+v for test: %s, index: %d", c.Indicators, v.title, i)
+				if atr != nil {
+					t.Errorf("Expected nil but got %+v for test: %s, index: %d", atr, v.title, i)
 				}
 				continue
-			} else if v.expected[i] != nil && (c.Indicators == nil || c.Indicators.ATRs == nil || c.Indicators.ATRs[14] == nil) {
-				t.Errorf("Expected non nil but got nil %+v for test: %s, index: %d", c.Indicators, v.title, i)
+			} else if v.expected[i] != nil && atr == nil {
+				t.Errorf("Expected non nil but got nil %+v for test: %s, index: %d", atr, v.title, i)
 				continue
 			}
-			atrs := c.Indicators.ATRs[14]
-			if !almostEqual(atrs.Value, v.expected[i].Value, 0.01) {
+			if !almostEqual(atr.Value, v.expected[i].Value, 0.01) {
 				t.Errorf("Expected ATR value to be %+v but got %+v for test: %s, index: %d",
 					v.expected[i].Value,
-					atrs.Value,
+					atr.Value,
 					v.title,
 					i)
 			}
-			if !almostEqual(atrs.Change, v.expected[i].Change, 0.01) {
+			if !almostEqual(atr.Change, v.expected[i].Change, 0.01) {
 				t.Errorf("Expected ATR change to be %+v but got %+v for test: %s, index: %d",
 					v.expected[i].Change,
-					atrs.Change,
+					atr.Change,
 					v.title,
 					i)
 			}
